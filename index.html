@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffcccc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 20px;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2.2em;
+            text-align: center;
+            max-width: 90%;
+        }
+        .hint {
+            font-size: 1.2em;
+            color: #d63384;
+            font-style: italic;
+            margin-top: 5px;
+            max-width: 90%;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 200px;
+            max-width: 80%;
+        }
+        .yes {
+            background-color: #ff4d4d;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .no {
+            background-color: #cccccc;
+            color: black;
+            position: relative;
+        }
+        img {
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <img id="mainImage" src="goldie.gif" alt="Cute dog with Be Mine sign">
+    <h1 id="question">Shivani, will you be my Valentine?? ❤️</h1>
+    <p class="hint">Psst... Hint: No is not an answer 😉</p>
+    <div class="buttons">
+        <button class="yes" id="yesBtn" onclick="handleYesClick()">Yes</button>
+        <button class="no" id="noBtn" onclick="handleNoClick()">No</button>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+        const mainImage = document.getElementById('mainImage');
+        
+        function handleNoClick() {
+            clickCount++;
+            if (clickCount === 1) {
+                question.innerHTML = "Odanae 😏";
+                mainImage.src = "are%20you%20sure.gif";
+                mainImage.alt = "Are You Sure? GIF";
+                setTimeout(() => {
+                    question.innerHTML = "Are you sure?? 😏";
+                }, 1500);
+            } else if (clickCount === 2) {
+                question.innerHTML = "Wrong answer! Try again. 😆";
+            } else if (clickCount === 3) {
+                question.innerHTML = "Wrong move! 🤣";
+                mainImage.src = "vadivelu.gif";
+                mainImage.alt = "Vadivelu Reaction GIF";
+            } else if (clickCount === 4) {
+                question.innerHTML = "Now you're just being mean! 😭";
+                mainImage.src = "im fine.gif";
+                mainImage.alt = "I'm Fine GIF";
+            } else if (clickCount >= 5) {
+                noBtn.style.position = "absolute";
+                noBtn.addEventListener('mouseover', () => {
+                    const x = Math.random() * (window.innerWidth - 100);
+                    const y = Math.random() * (window.innerHeight - 50);
+                    noBtn.style.left = `${x}px`;
+                    noBtn.style.top = `${y}px`;
+                });
+            }
+        }
+
+        function handleYesClick() {
+            showFinalMessage();
+        }
+        
+        function showFinalMessage() {
+            document.body.innerHTML = ""; // Clear existing content
+            
+            let container = document.createElement("div");
+            let message = document.createElement("h1");
+            message.id = "typing";
+            let image = document.createElement("img");
+            image.src = "yes.gif";
+            image.alt = "Romantic gif";
+            let audio = document.createElement("audio");
+            audio.id = "bgMusic";
+            audio.autoplay = true;
+            let source = document.createElement("source");
+            source.src = "Blue.mp3";
+            source.type = "audio/mp3";
+            audio.appendChild(source);
+            
+            container.appendChild(message);
+            container.appendChild(image);
+            container.appendChild(audio);
+            document.body.appendChild(container);
+            
+            let text = "Aww, you made my day ❤️";
+            let i = 0;
+            let typingEffect = setInterval(() => {
+                if (i < text.length) {
+                    message.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingEffect);
+                    showPersonalizedMessage();
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
